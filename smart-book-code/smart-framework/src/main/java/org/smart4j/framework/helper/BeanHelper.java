@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smart4j.framwork.util.ReflectionUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,11 +16,12 @@ public class BeanHelper {
 
     private static Logger LOGGER = LoggerFactory.getLogger(BeanHelper.class);
 
-    private static Map<Class<?>, Object> BEAN_MAP;
+    private static Map<Class<?>, Object> BEAN_MAP = new HashMap<Class<?>, Object>();
     static{
         Set<Class<?>> beanClassSet = ClassHelper.getBeanClassSet();
-        for (Class<?> cls : beanClassSet) {
-            BEAN_MAP.put(cls, ReflectionUtil.newInstance(cls));
+        for (Class<?> beanClass : beanClassSet) {
+            Object beanInstance = ReflectionUtil.newInstance(beanClass);
+            BEAN_MAP.put(beanClass, beanInstance);
         }
 
     }

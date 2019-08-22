@@ -19,7 +19,7 @@ public class JsonUtil {
      * @param object
      * @return
      */
-    public String toJson(Object object)
+    public static String toJson(Object object)
     {
         try {
             return OBJECT_MAPPER.writeValueAsString(object);
@@ -29,7 +29,7 @@ public class JsonUtil {
         }
     }
 
-    public <T> T fromJson(String json, Class<T> type)
+    public static <T> T fromJson(String json, Class<T> type)
     {
         try {
             return OBJECT_MAPPER.readValue(json, type);

@@ -25,7 +25,7 @@ public class ClassUtil {
     public static Set<Class<?>> getClassSet(String packageName){
         Set<Class<?>> classSet = new HashSet<Class<?>>();
         try {
-            Enumeration<URL> urls = getClassLoader().getResources(packageName);
+            Enumeration<URL> urls = getClassLoader().getResources(packageName.replace(".", "/"));
             while(urls.hasMoreElements()){
                 URL url = urls.nextElement();
                 if(url != null)
