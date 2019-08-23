@@ -46,6 +46,7 @@ public class DispatcherServlet extends HttpServlet {
         defaultServlet.addMapping("/favicon.ico");
         //defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
     }
+
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletHelper.init(req, resp);
