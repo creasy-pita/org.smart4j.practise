@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import org.smart4j.chapter4.model.Customer;
 import org.smart4j.framework.annotation.Service;
+import org.smart4j.framework.helper.DatabaseHelper;
 
 
 /**
@@ -18,9 +19,9 @@ public class CustomerService {
      */
     public List<Customer> getCustomerList() {
         String sql = "SELECT * FROM customer";
-        //return DatabaseHelper.queryEntityList(Customer.class, sql);
+        return DatabaseHelper.queryEntityList(Customer.class, sql,null);
 
-        //TODO
+/*        //TODO
         //模拟数据
         List<Customer> customerList = new ArrayList<Customer>(2);
         Customer c1 = new Customer();
@@ -36,7 +37,7 @@ public class CustomerService {
         c2.setTelephone("222");
         customerList.add(c1);
         customerList.add(c2);
-        return customerList;
+        return customerList;*/
     }
 
     /**

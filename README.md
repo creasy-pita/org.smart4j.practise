@@ -9,3 +9,13 @@ HelperLoader
     解决：
     Object proxy = ProxyManager.createProxy(targetClass, proxyList);
     
+    
+DatabaseHelper
+    BasicDataSource:  
+        from JAR : org.apache.commons » commons-dbcp2 
+        description : Apache Commons DBCP software implements Database Connection Pooling
+    QueryRunner  :
+        from JAR : commons-dbutils » commons-dbutilsApache          
+        description : The Apache Commons DbUtils package is a set of Java utility classes for easing JDBC development.
+    ThreadLocal<Connection> 
+        
