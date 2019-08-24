@@ -9,14 +9,14 @@ import org.smart4j.framwork.util.ClassUtil;
 public class HelperLoader {
     public static void init()
     {
-        Class<?>[] clses = new Class[]{
+        Class<?>[] classes = new Class[]{
                 ClassHelper.class,
                 BeanHelper.class,
                 AopHelper.class,
                 IocHelper.class,
                 ControllerHelper.class
         };
-        for (Class<?> cls : clses) {
+        for (Class<?> cls : classes) {
             ClassUtil.loadClass(cls.getName());
         }
     }
