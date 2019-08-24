@@ -15,7 +15,7 @@ public class ClassHelper {
 
     private static Set<Class<?>>  CLASS_SET;
     static {
-        String basePackage = "org.smart4j.chapter3";
+        String basePackage = "org.smart4j.chapter4";//chapter3
         CLASS_SET = ClassUtil.getClassSet(basePackage);
     }
     

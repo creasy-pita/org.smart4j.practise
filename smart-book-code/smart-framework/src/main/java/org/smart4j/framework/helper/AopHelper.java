@@ -25,7 +25,7 @@ public class AopHelper {
             for (Map.Entry<Class<?>, List<Proxy>> entry : targetMap.entrySet()) {
                 Class<?> targetClass = entry.getKey();
                 List<Proxy> proxyList = entry.getValue();
-                Proxy proxy = ProxyManager.createProxy(targetClass, proxyList);
+                Object proxy = ProxyManager.createProxy(targetClass, proxyList);
                 BeanHelper.setBean(targetClass, proxy);
             }
         }
@@ -54,9 +54,13 @@ public class AopHelper {
             {
                 //获取aspect 代理类 的代理的目标类集合（此处目标类是 注解为 Aspect.value()的类)
                 Aspect aspect = proxyClass.getAnnotation(Aspect.class);
+                Class<? extends Annotation> annotation = aspect.value();
                 //TBD 可能存在bug
-                Set<Class<?>> targetClassSet = ClassHelper.getClassSetByAnnotation(aspect.value());
-                proxyMap.put(proxyClass, targetClassSet);
+                if(annotation!=null)
+                {
+                    Set<Class<?>> targetClassSet = ClassHelper.getClassSetByAnnotation(annotation);
+                    proxyMap.put(proxyClass, targetClassSet);
+                }
             }
         }
         return proxyMap;
