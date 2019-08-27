@@ -9,6 +9,8 @@ HelperLoader
     解决：
     Object proxy = ProxyManager.createProxy(targetClass, proxyList);
     
+    源码：request.getParameterNames() 不能获取 form 表单的内容
+    问题：body 中 form 内容 需要通过  request.getInputStream() 获取
     
 DatabaseHelper
     BasicDataSource:  

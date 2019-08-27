@@ -30,5 +30,33 @@ public class CustomerController {
         return new View("customer.jsp").addModel("customerList", customerList);
     }
 
+    @Action("get:/customer_create")
+    public View create(Param param)
+    {
+        return new View("customer_create.jsp");
+    }
 
+    @Action("post:/customer_create")
+    public View createsubmit(Param param)
+    {
+        customerService.createCustomer(param.getFieldMap());
+        return new View("customer.jsp");
+    }
+
+    @Action("get:/customer_edit")
+    public View edit(Param param)
+    {
+        Customer c = customerService.getCustomer(param.getLong("id"));
+        return new View("customer_edit.jsp").addModel("customer", c);
+    }
+
+    @Action("put:/customer_edit")
+    public Data editSubmit(Param param)
+    {
+        Map<String, Object> fieldMap = param.getFieldMap();
+        long id = param.getLong("id");
+        fieldMap.remove("id");
+        boolean result = customerService.updateCustomer(id, fieldMap);
+        return new Data(result);
+    }
 }

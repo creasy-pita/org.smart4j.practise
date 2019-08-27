@@ -1,10 +1,7 @@
 package org.smart4j.framework;
 
 import org.smart4j.framework.bean.*;
-import org.smart4j.framework.helper.BeanHelper;
-import org.smart4j.framework.helper.ConfigHelper;
-import org.smart4j.framework.helper.ControllerHelper;
-import org.smart4j.framework.helper.ServletHelper;
+import org.smart4j.framework.helper.*;
 import org.smart4j.framwork.util.JsonUtil;
 import org.smart4j.framwork.util.ReflectionUtil;
 
@@ -44,7 +41,7 @@ public class DispatcherServlet extends HttpServlet {
 
         ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
         defaultServlet.addMapping("/favicon.ico");
-        //defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
+        defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
     }
 
     @Override
@@ -58,7 +55,10 @@ public class DispatcherServlet extends HttpServlet {
             Class<?> controllerClass = handler.getControllerClass();
             Object controllerBean = BeanHelper.getBean(controllerClass);
             //compose action method params from httpservletrequest
-            Param param = GetParamsFromHttpRequest(req);
+
+
+            Param param = new Param(RequestHelper.createParam(req));
+
             Object[] params = {param};
             Method actionMethod = handler.getActionMethod();
             //View type : redirect to another controller | forward to a view of jsp language | json data
