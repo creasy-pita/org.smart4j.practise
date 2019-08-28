@@ -37,10 +37,10 @@ public class CustomerController {
     }
 
     @Action("post:/customer_create")
-    public View createsubmit(Param param)
+    public Data createsubmit(Param param)
     {
-        customerService.createCustomer(param.getFieldMap());
-        return new View("customer.jsp");
+        boolean result = customerService.createCustomer(param.getFieldMap());
+        return new Data(result);
     }
 
     @Action("get:/customer_edit")
@@ -55,8 +55,15 @@ public class CustomerController {
     {
         Map<String, Object> fieldMap = param.getFieldMap();
         long id = param.getLong("id");
-        fieldMap.remove("id");
         boolean result = customerService.updateCustomer(id, fieldMap);
+        return new Data(result);
+    }
+
+    @Action("get:/customer_delete")
+    public Data delete(Param param)
+    {
+        long id = param.getLong("id");
+        boolean result = customerService.deleteCustomer(id);
         return new Data(result);
     }
 }
