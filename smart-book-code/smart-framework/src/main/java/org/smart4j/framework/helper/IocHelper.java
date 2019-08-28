@@ -1,6 +1,7 @@
 package org.smart4j.framework.helper;
 
 import org.smart4j.framework.annotation.Inject;
+import org.smart4j.framwork.util.ArrayUtil;
 import org.smart4j.framwork.util.ReflectionUtil;
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -15,11 +16,14 @@ public class IocHelper {
             Class<?> beanClass = entry.getKey();
             Object beanInstance = entry.getValue();
             Field[] beanFields = beanClass.getDeclaredFields();
-            for (Field beanField : beanFields) {
-                if (beanField.isAnnotationPresent(Inject.class))
-                {
-                    Object injectInstance = beanmap.get(beanField.getType());
-                    ReflectionUtil.setField(beanInstance, beanField, injectInstance);
+            if(ArrayUtil.isNotEmpty(beanFields))
+            {
+                for (Field beanField : beanFields) {
+                    if (beanField.isAnnotationPresent(Inject.class))
+                    {
+                        Object injectInstance = beanmap.get(beanField.getType());
+                        ReflectionUtil.setField(beanInstance, beanField, injectInstance);
+                    }
                 }
             }
         }

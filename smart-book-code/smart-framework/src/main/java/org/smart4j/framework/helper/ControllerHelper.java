@@ -3,6 +3,7 @@ package org.smart4j.framework.helper;
 import org.smart4j.framework.annotation.Action;
 import org.smart4j.framework.bean.Handler;
 import org.smart4j.framework.bean.Request;
+import org.smart4j.framwork.util.ArrayUtil;
 import org.smart4j.framwork.util.ClassUtil;
 
 import java.lang.reflect.Method;
@@ -22,18 +23,20 @@ public class ControllerHelper {
         Set<Class<?>> controllerClassSet= ClassHelper.getControllerClassSet();
         for (Class<?> controllerClass: controllerClassSet){
             Method[] methods = controllerClass.getMethods();
-            for (Method method : methods) {
-                if (method.isAnnotationPresent(Action.class))
-                {
-                    String mapping = method.getAnnotation(Action.class).value();
-                    if(mapping.matches("\\w+:/\\w*"))
-                    {
-                        String[] array = mapping.split(":");
-                        String requestMethod = array[0];
-                        String requestPath = array[1];
-                        Request request = new Request(requestMethod, requestPath);
-                        Handler handler = new Handler(controllerClass, method);
-                        ACTION_MAP.put(request, handler);
+            if(ArrayUtil.isNotEmpty(methods)) {
+                for (Method method : methods) {
+                    if (method.isAnnotationPresent(Action.class)) {
+                        String mapping = method.getAnnotation(Action.class).value();
+                        if (mapping.matches("\\w+:/\\w*")) {
+                            String[] array = mapping.split(":");
+                            if (ArrayUtil.isNotEmpty(array)) {
+                                String requestMethod = array[0];
+                                String requestPath = array[1];
+                                Request request = new Request(requestMethod, requestPath);
+                                Handler handler = new Handler(controllerClass, method);
+                                ACTION_MAP.put(request, handler);
+                            }
+                        }
                     }
                 }
             }

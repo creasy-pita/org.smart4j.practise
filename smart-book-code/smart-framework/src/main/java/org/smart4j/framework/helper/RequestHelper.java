@@ -1,14 +1,13 @@
 package org.smart4j.framework.helper;
 
 import org.smart4j.framework.bean.FormParam;
+import org.smart4j.framwork.util.ArrayUtil;
 import org.smart4j.framwork.util.CodecUtil;
 import org.smart4j.framwork.util.StreamUtil;
 import org.smart4j.framwork.util.StringUtil;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -35,7 +34,7 @@ public class RequestHelper {
         {
             String fieldName = paramNames.nextElement();
             String[] fieldValues = request.getParameterValues(fieldName);
-            if(fieldValues.length>0)
+            if(ArrayUtil.isNotEmpty(fieldValues))
             {
                 String fieldValue;
                 if (fieldValues.length == 1) {
@@ -59,15 +58,17 @@ public class RequestHelper {
     public static List<FormParam> parseInputStream(HttpServletRequest request){
         List<FormParam> formParamList = new ArrayList<FormParam>();
         try {
-            String bodyStr = CodecUtil.decodeURL(StreamUtil.getString(request.getInputStream()));
+            String bodyStr = CodecUtil.decodeUrl(StreamUtil.getString(request.getInputStream()));
             String[]  kvs = StringUtil.splitString(bodyStr, "&"); // bodyStr.split(StringUtil.SEPARATOR);
-            for (String kv :
-                    kvs) {
-                String[] array = StringUtil.splitString(kv,"=");
-                if(array.length ==2) {
-                    String fieldName = array[0];
-                    String fieldValue = array[1];
-                    formParamList.add(new FormParam(fieldName, fieldValue));
+            if(ArrayUtil.isNotEmpty(kvs))
+            {
+                for (String kv : kvs) {
+                    String[] array = StringUtil.splitString(kv,"=");
+                    if(ArrayUtil.isNotEmpty(array) && array.length ==2) {
+                        String fieldName = array[0];
+                        String fieldValue = array[1];
+                        formParamList.add(new FormParam(fieldName, fieldValue));
+                    }
                 }
             }
         } catch (IOException e) {

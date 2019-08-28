@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
+ * Properties属性文件工具类
  * Created by creasypita on 8/24/2019.
  */
 public class PropsUtil {
@@ -53,4 +54,63 @@ public class PropsUtil {
         }
         return value;
     }
+
+    /**
+     * 获取指定key 的int 类型属性
+     * @param properties
+     * @param key
+     * @return
+     */
+    public static int getInt(Properties properties, String key){
+        int value = 0;
+        if(properties.containsKey(key)){
+            value = CastUtil.castInt(properties.getProperty(key));
+        }
+        return value;
+    }
+
+    /**
+     * 获取指定key 的 int 类型属性(可指定默认值)
+     * @param properties
+     * @param key
+     * @param defaultValue
+     * @return
+     */
+    public static int getInt(Properties properties, String key, int defaultValue){
+        int value = defaultValue;
+        if(properties.containsKey(key)){
+            value = CastUtil.castInt(properties.getProperty(key), defaultValue);
+        }
+        return value;
+    }
+
+    /**
+     * 获取指定key 的 boolean 类型属性
+     * @param properties
+     * @param key
+     * @return
+     */
+    public static boolean getBoolean(Properties properties, String key){
+        boolean value = false;
+        if(properties.containsKey(key)){
+            value = CastUtil.castBoolean(properties.getProperty(key));
+        }
+        return value;
+    }
+
+    /**
+     * 获取指定key 的 boolean 类型属性(可指定默认值)
+     * @param properties
+     * @param key
+     * @param defaultValue
+     * @return
+     */
+    public static boolean getBoolean(Properties properties, String key, boolean defaultValue){
+        boolean value = defaultValue;
+        if(properties.containsKey(key)){
+            value = CastUtil.castBoolean(properties.getProperty(key), defaultValue);
+        }
+        return value;
+    }
+
 }
