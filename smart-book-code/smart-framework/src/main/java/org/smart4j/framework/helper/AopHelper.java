@@ -3,9 +3,11 @@ package org.smart4j.framework.helper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smart4j.framework.annotation.Aspect;
+import org.smart4j.framework.annotation.Service;
 import org.smart4j.framework.proxy.AspectProxy;
 import org.smart4j.framework.proxy.Proxy;
 import org.smart4j.framework.proxy.ProxyManager;
+import org.smart4j.framework.proxy.TransactionProxy;
 
 import java.lang.annotation.Annotation;
 import java.util.*;
@@ -41,6 +43,7 @@ public class AopHelper {
     {
         Map<Class<?>, Set<Class<?>>> proxyMap = new HashMap<Class<?>, Set<Class<?>>>();
         proxyMap.putAll(createControllerProxyMap());
+        proxyMap.putAll(createTransactionProxyMap());
         return proxyMap;
     }
 
@@ -63,6 +66,13 @@ public class AopHelper {
                 }
             }
         }
+        return proxyMap;
+    }
+
+    private static Map<Class<?>, Set<Class<?>>> createTransactionProxyMap(){
+        Map<Class<?>, Set<Class<?>>> proxyMap = new HashMap<Class<?>, Set<Class<?>>>();
+        Set<Class<?>> set = ClassHelper.getClassSetByAnnotation(Service.class);
+        proxyMap.put(TransactionProxy.class, set);
         return proxyMap;
     }
 

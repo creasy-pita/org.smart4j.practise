@@ -20,4 +20,14 @@ DatabaseHelper
         from JAR : commons-dbutils » commons-dbutilsApache          
         description : The Apache Commons DbUtils package is a set of Java utility classes for easing JDBC development.
     ThreadLocal<Connection> 
-        
+    
+AOP框架
+    本项目切面类主要包括  继承 aspectProxy  TransactionProxy 
+    aspectProxy 
+        定义 @aspect 注解
+        搭建 aspectProxy 代理框架
+        加载 aspectProxy 部分的AOP框架
+    TransactionProxy 
+        定义 @transaction 注解
+        搭建 TransactionProxy 代理框架
+        加载 TransactionProxy 部分的AOP框架        

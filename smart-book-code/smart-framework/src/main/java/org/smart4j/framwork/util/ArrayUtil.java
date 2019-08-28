@@ -7,7 +7,7 @@ import org.apache.commons.lang3.ArrayUtils;
  *
  * @ProjectName: lujunqiang-smart-book-code-master
  */
-public class ArrayUtil {
+public class ArrayUtil  {
 
     /**
      * 判断数组是否非空

@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
+ *
  * Created by creasypita on 8/24/2019.
  */
 public class DatabaseHelper {
@@ -51,6 +52,43 @@ public class DatabaseHelper {
             }
         }
         return conn;
+    }
+
+    public static void beginTransaction(){
+        Connection conn = getConnection();
+        try {
+            conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            LOGGER.error("set auto commit failure", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void commitTransaction(){
+        Connection conn = getConnection();
+        try {
+            conn.commit();
+            conn.close();
+        } catch (SQLException e) {
+            LOGGER.error("commit failure", e);
+            throw new RuntimeException(e);
+        }finally {
+            CONNECTION_HOLDER.remove();
+        }
+    }
+
+    public static void rollbackTransaction(){
+        Connection conn = getConnection();
+        try {
+            conn.rollback();
+            conn.close();
+        } catch (SQLException e) {
+            LOGGER.error("rollback failure", e);
+            throw new RuntimeException(e);
+        }finally {
+            CONNECTION_HOLDER.remove();
+        }
+
     }
 
     public static  <T> List<T> queryEntityList(Class<T> entityClass, String sql, Object[] params)
