@@ -6,13 +6,18 @@ package org.smart4j.chapter6.threadlocal;
  * @ProjectName: lujunqiang-smart-book-code-master
  */
 public class SequenceA implements Sequence {
-    private  static int number = 0;
-
+    private static ThreadLocal<Integer> NUMBER_CONTAINER = new ThreadLocal<Integer>(){
+        @Override
+        protected Integer initialValue() {
+            return 0;
+        }
+    };
     public int getNumber() {
-        number = number +1;
-        return number;
+        NUMBER_CONTAINER.set(NUMBER_CONTAINER.get()+1);
+        return NUMBER_CONTAINER.get();
     }
 
+    
     public static void main(String[] args){
         ClientThread thread1 = new ClientThread(new SequenceA());
         ClientThread thread2 = new ClientThread(new SequenceA());
