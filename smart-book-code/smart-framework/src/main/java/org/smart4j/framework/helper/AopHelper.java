@@ -22,12 +22,16 @@ public class AopHelper {
 
     static{
         try{
+            //切面类与targetclass的map,记录每个切面类与目标类的切入管理,比如这里的 controllerAspect -》CustomerController
             Map<Class<?>, Set<Class<?>>> proxyMap = createProxyMap();
+            //proxyMap 反转得到 目标类targetclass与切面类的map关系，比如某个controller有 日志和事物的切面
             Map<Class<?>, List<Proxy>> targetMap = createTargetMap(proxyMap);
             for (Map.Entry<Class<?>, List<Proxy>> entry : targetMap.entrySet()) {
                 Class<?> targetClass = entry.getKey();
                 List<Proxy> proxyList = entry.getValue();
+                //创建proxy,包装最终执行目标类和所有切面类的 一个代理链
                 Object proxy = ProxyManager.createProxy(targetClass, proxyList);
+                //把这个proxy和目标类做绑定放到bean容器，目标类的执行即会执行这个proxy
                 BeanHelper.setBean(targetClass, proxy);
             }
         }
