@@ -9,9 +9,8 @@ import org.smart4j.framwork.util.StringUtil;
  */
 public class StringUtilTest {
     @Test
-    public void test()
-    {
-        String[]  array = StringUtil.splitString(null,",");
-        Assert.assertEquals(null,array);
+    public void test() {
+        String[] array = StringUtil.splitString(null, ",");
+        Assert.assertEquals(null, array);
     }
 }
